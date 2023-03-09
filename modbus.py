@@ -15,7 +15,7 @@ try:
     print("Connected")
     while True:
         print("Starting the request")
-        a = client.read_holding_registers(addresse=1248,count=2,unit=2)
+        a = client.read_holding_registers(addresse=1248,count=1,unit=2)
         print(a)
         sleep(1)
 except :
