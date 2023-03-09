@@ -19,6 +19,7 @@ try:
         #unit= the slave unit this request is targeting
         #address= the starting address to read from
         read = client.read_holding_registers(addresse=122,count=1,unit=1)
+        #UNEXPECTED ISSUE HERE WHEN READING
         data=read.registers[0] #reading the registers 30122
         print(data)
         sleep(1)
