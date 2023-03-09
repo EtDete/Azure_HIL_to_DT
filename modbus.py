@@ -1,21 +1,24 @@
 # Etablir la connexion Modbus entre le typhoon HIL et l'ordinateur
 
-from pyModbusTCP.server import ModbusServer, DataBank
+from pymodbus.client.tcp import ModbusTcpClient
 from time import sleep
 
 #create an instance of modbus server
 ip_addr = "192.168.1.233" #ipv4 address of the server
-port = 12345 # port number of the server
-serv = ModbusServer(ip_addr,port,no_block=True)
+port = 502 # port number of the server
+client = ModbusTcpClient(ip_addr,port)
 
 
 try:
-    print("Start server...")
-    serv.start()
-    print("ONLINE")
+    print("Start connecting...")
+    client.connect()
+    print("Connected")
     while True:
-        print("")
+        print("Starting the request")
+        a = client.read_holding_registers(addresse=1248,count=2,unit=2)
+        print(a)
+        sleep(1)
 except :
-    print("Server shutting down")
-    serv.close()
-    print("Server offline")
+    print("Error")
+    client.close()
+    print("client disconnected")
