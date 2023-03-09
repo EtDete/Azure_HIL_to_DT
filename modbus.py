@@ -15,9 +15,14 @@ try:
     print("Connected")
     while True:
         print("Starting the request")
-        a = client.read_holding_registers(addresse=1248,count=1,unit=2)
-        print(a)
+        #count= the number of registers to read
+        #unit= the slave unit this request is targeting
+        #address= the starting address to read from
+        read = client.read_holding_registers(addresse=122,count=1,unit=1)
+        data=read.registers[0] #reading the registers 30122
+        print(data)
         sleep(1)
+        
 except :
     print("Error")
     client.close()
