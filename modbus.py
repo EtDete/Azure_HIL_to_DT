@@ -2,6 +2,7 @@
 
 from pymodbus.client.tcp import ModbusTcpClient
 from time import sleep
+import socket
 
 #create an instance of modbus server
 ip_addr = "192.168.1.233" #ipv4 address of the server
@@ -10,6 +11,9 @@ client = ModbusTcpClient(ip_addr,port)
 
 
 try:
+    s = socket.socket(ip_addr)
+    s.bind("192.168.1.2")
+    s.connect()
     print("Start connecting...")
     client.connect()
     print("Connected")
@@ -23,7 +27,7 @@ try:
         data=read.registers[0] #reading the registers 30122
         print(data)
         sleep(1)
-        
+    # s.close
 except :
     print("Error")
     client.close()
