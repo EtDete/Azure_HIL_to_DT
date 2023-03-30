@@ -11,12 +11,13 @@ client = ModbusTcpClient(ip_addr,port)
 
 
 try:
-    s = socket.socket(ip_addr)
-    s.bind("192.168.1.2")
-    s.connect()
+    #s = socket.socket(ip_addr)
+    #s.bind("192.168.1.2")
+    #s.connect()
     print("Start connecting...")
     client.connect()
     print("Connected")
+    print(client.report_slave_id())
     while True:
         print("Starting the request")
         #count= the number of registers to read
