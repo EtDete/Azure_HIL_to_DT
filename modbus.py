@@ -42,6 +42,7 @@ def run_modbu_task(ip_addr,port):
     read = client.read_holding_registers(address=122,count=1)
     #UNEXPECTED ISSUE HERE WHEN READING
     data=read.registers[0] #reading the registers 30122
-    #print(data)
+    print(data)
     client.close()
     #terminate the connection
+    return data
