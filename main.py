@@ -3,5 +3,7 @@ import modbus
 import extracting_data
 import parameter as param
 
-modbus.run_modbu_task(param.ip_addr,param.port)
+data = modbus.run_modbu_task(param.ip_addr,param.port)
+
+
 

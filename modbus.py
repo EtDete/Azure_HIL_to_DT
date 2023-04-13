@@ -2,22 +2,43 @@
 
 from pymodbus.client.tcp import ModbusTcpClient
 from time import sleep
-
+import socket
+import parameter as param
 def setup_client(ip_addr,port):
     #create an instance of modbus server
     client = ModbusTcpClient(ip_addr,port)
     return(client)
 
-def setup_connection(client):
+def setup_socket():
+    """Permet de setup la connexion entre le HIL et le PC avec un socket
+    """
+    try:
+        print("Creating the socket")
+        s = socket.socket(socket.AF_INET,param.ip_addr)
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        print("Bind to the port")
+        s.bind((param.ip_addr,param.port))
+        print("Server created")
+        s.listen(1)
+        conn, addr = s.accept()
+        print("connection accepted")
+    except socket.timeout as e:
+        print(e)
+        print("Timeout: unable to bind to IP:"+param.ip_addr+'port:'+param.port+".\n")
+        return
+    except socket.error as e:
+        (errno,msg_str)= e.args
+        print(msg_str)
+        print("Timeout: unable to bind to IP:"+param.ip_addr+'port:'+param.port+".\n")
+        return
+       
+def setup_connection_client(client):
     """Opening the connection between the client and the server
 
     Args:
         client (ModbusTcpClient): this virtually represent the device we are connecting to. It is define with an ip
     """
     try:
-        #s = socket.socket(ip_addr)
-        #s.bind("192.168.1.2")
-        #s.connect()
         print("Start connecting...")
         client.connect()
         print("Connected")
@@ -34,7 +55,8 @@ def run_modbu_task(ip_addr,port):
         port (int): port number of the server, usually 502
     """
     client = setup_client(ip_addr,port)
-    setup_connection(client)
+    setup_socket()
+    setup_connection_client(client)
     print("Starting the request")
     #count= the number of registers to read
     #unit= the slave unit this request is targeting
