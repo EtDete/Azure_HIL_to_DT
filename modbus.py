@@ -47,7 +47,7 @@ def setup_connection_client(client):
         client.close()
         print("client disconnected")
 
-def run_modbu_task(ip_addr,port):
+def run_modbu_task(ip_addr,port,request_addr):
     """This function setup a modbus connection between a master and a client (device) and read a holding register at the address 40122
 
     Args:
@@ -61,8 +61,8 @@ def run_modbu_task(ip_addr,port):
     #count= the number of registers to read
     #unit= the slave unit this request is targeting
     #address= the starting address to read from
-    read = client.read_holding_registers(address=122,count=1)
-    #UNEXPECTED ISSUE HERE WHEN READING
+    read = client.read_holding_registers(address=param.request_addr,count=1)
+    print(read)
     data=read.registers[0] #reading the registers 30122
     print(data)
     client.close()
