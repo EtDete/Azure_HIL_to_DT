@@ -14,7 +14,7 @@ def setup_socket():
     """
     try:
         print("Creating the socket")
-        s = socket.socket(socket.AF_INET,param.ip_addr)
+        s = socket.socket(socket.AF_INET,socket.SOCK_STREAM,0)
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         print("Bind to the port")
         s.bind((param.ip_addr,param.port))
@@ -55,7 +55,7 @@ def run_modbu_task(ip_addr,port):
         port (int): port number of the server, usually 502
     """
     client = setup_client(ip_addr,port)
-    setup_socket()
+    #setup_socket()
     setup_connection_client(client)
     print("Starting the request")
     #count= the number of registers to read
