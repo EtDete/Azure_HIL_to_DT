@@ -61,7 +61,7 @@ def run_modbu_task(ip_addr,port,request_addr):
     #count= the number of registers to read
     #unit= the slave unit this request is targeting
     #address= the starting address to read from
-    read = client.read_holding_registers(address=param.request_addr,count=1)
+    read = client.read_holding_registers(address=request_addr,count=1)
     print(read)
     data=read.registers[0] #reading the registers 30122
     print(data)
