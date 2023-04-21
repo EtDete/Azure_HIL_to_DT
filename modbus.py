@@ -44,6 +44,6 @@ def run_modbu_task(client,request_addr):
     read = client.read_holding_registers(address=request_addr,count=1)
     data = read.registers[0] #reading the registers 30122
     print(data)
-    #client.close()
+    client.close()
     #terminate the connection
     return data

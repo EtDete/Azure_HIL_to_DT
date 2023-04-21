@@ -25,3 +25,4 @@ Iot_message_mqtt.run_client(device_id,path_to_root_cert,sas_token,iot_hub_name,d
         
 #     except Exception:
 #         client.close
+

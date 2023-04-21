@@ -1,7 +1,7 @@
 from paho.mqtt import client as mqtt
 import ssl
 
-path_to_root_cert = r"C:\Users\etien\OneDrive\Bureau\LIS\Azure_HIL_to_DT\certificate.txt"
+path_to_root_cert = "C:\\Users\\etien\\OneDrive\\Bureau\\LIS\\Azure_HIL_to_DT\\certificate.txt"
 device_id = "Wind_unit"
 sas_token = "jw92w3o43TpsXpNGEmb1bXAsRrWvtGSedWGE5zWHYGQ="
 iot_hub_name = "MicrogridHub"
@@ -36,7 +36,7 @@ def connect_iot_hub(device_id, client,path_to_root_cert,sas_token,iot_hub_name):
     client.tls_insecure_set(False)
 
     client.connect(iot_hub_name+".azure-devices.net", port=8883)
-    #client.loop_forever()
+    client.loop_forever()
 
 def sending_message(client,data):
     client.publish("devices/"+ device_id + "/messages/events/", data, qos=1)
