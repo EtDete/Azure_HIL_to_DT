@@ -1,8 +1,7 @@
 # Etablir la connexion Modbus entre le typhoon HIL et l'ordinateur
 
 from pymodbus.client.tcp import ModbusTcpClient
-from time import sleep
-import parameter as param
+
 
 def setup_client(ip_addr,port):
     #create an instance of modbus server
