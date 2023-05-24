@@ -1,13 +1,15 @@
-from pymodbus.server import ModbusTcpServer, StartTcpServer
+# from pymodbus.server import ModbusTcpServer, StartTcpServer
 from pymodbus.datastore import ModbusSequentialDataBlock
 from pymodbus.datastore import ModbusSlaveContext, ModbusServerContext
-from setup_server import setup_server
+from pymodbus.server import StartTcpServer,StartAsyncTcpServer
+# from setup_server import setup_server
+import asyncio
 
-args = setup_server(description=None, context=None, cmdline=None)
+# args = setup_server(description=None, context=None, cmdline=None)
 
 # Créer un contexte de serveur Modbus
 store = ModbusSlaveContext(
-    di=ModbusSequentialDataBlock(0, [0]*100),  # Entrées discrètes
+    di=ModbusSequentialDataBlock(0, [0]*100),  # Entrées discrètes   #(address,list of values)
     co=ModbusSequentialDataBlock(0, [0]*100),  # Sorties discrètes
     hr=ModbusSequentialDataBlock(0, [0]*100),  # Registres de maintien
     ir=ModbusSequentialDataBlock(0, [0]*100))  # Registres d'entrée
@@ -18,35 +20,17 @@ context = ModbusServerContext(slaves=store, single=True)
 def write_to_holding_register(address, value):
     context[0x00].setValues(3, address, [value])
 
-# Écrire dans un registre de maintien
-# write_to_holding_register(0, 42)
-
-
-# identity = None
 # StartTcpServer(context,identity,address=("192.168.1.129",502))
-def run_sync_server(context,identity,address,framer):
+async def run_sync_server(context):
     """Run server."""
     try:
         # Démarrer le serveur Modbus TCP
-        server = StartTcpServer(args)
+        server = await StartAsyncTcpServer(context,address=("147.94.73.138",502))
+        # server.serve_forever()
+        print("ok")
     except:
-        # Arrêter le serveur Modbus TCP
-        server.server_close()
-    # server = StartTcpServer(
-    #         context,  # Data storage
-    #         identity,  # server identify
-    #         # TBD host=
-    #         # TBD port=
-    #         address,  # listen address
-    #         # custom_functions=[],  # allow custom handling
-    #         framer,  # The framer strategy to use
-    #         # TBD handler=None,  # handler for each session
-    #         allow_reuse_address=True,  # allow the reuse of an address
-    #         # ignore_missing_slaves=True,  # ignore request to a missing slave
-    #         # broadcast_enable=False,  # treat slave_id 0 as broadcast address,
-    #         # timeout=1,  # waiting time for request to complete
-    #         # TBD strict=True,  # use strict timing, t1.5 for Modbus RTU
-    #         # defer_start=False,  # Only define server do not activate
-    #     )
+        print("Erreur dans le lancement du serveur")
 
-run_sync_server()
+asyncio.run(run_sync_server(context))
+# Écrire dans un registre de maintien
+write_to_holding_register(0, 42)
