@@ -4,7 +4,7 @@ from pymodbus.client.tcp import ModbusTcpClient
 
 
 def setup_client(ip_addr,port):
-    #create an instance of modbus server
+    #create an instance of modbus client
     client = ModbusTcpClient(ip_addr,port)
     return(client)
 
