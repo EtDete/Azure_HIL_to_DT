@@ -1,4 +1,4 @@
-# Etablir la connexion Modbus entre le typhoon HIL et l'ordinateur
+# Etablir la connexion Modbus entre le typhoon HIL et la Jetson Nano
 
 from pymodbus.client.tcp import ModbusTcpClient
 
@@ -33,16 +33,15 @@ def run_modbu_task(client,request_addr):
     """This function setup a modbus connection between a master and a client (device) and read a holding register at a given address
 
     Args:
-        ip_addr (str): ipv4 address of the server
-        port (int): port number of the server, usually 502
+        ip_addr (str): ipv4 address of the client
+        port (int): port number of the client, usually 502
     """
     print("Starting the request")
     #count= the number of registers to read
     #unit= the slave unit this request is targeting
     #address= the starting address to read from
     read = client.read_holding_registers(address=request_addr,count=1)
-    data = read.registers[0] #reading the registers 30122
-    print(data)
+    data = read.registers[0] #reading the registers with the request_addr addresse 
     client.close()
     #terminate the connection
     return data
