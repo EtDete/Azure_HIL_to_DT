@@ -31,7 +31,7 @@ async def updating_task(context):
     values = random.randrange(1,100)  # increment by 1.
     txt = f"new values: {str(values)}"
     _logger.debug(txt)
-    context[slave_id].setValues(fc_as_hex, address, values)
+    context[slave_id].setValues(fc_as_hex, address, [values])
     await asyncio.sleep(1)
     
 # Fonction pour écrire dans un registre de maintien
