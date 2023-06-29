@@ -41,12 +41,8 @@ def run_modbu_task(client,request_addr):
     #count= the number of registers to read
     #unit= the slave unit this request is targeting
     #address= the starting address to read from
-    # read = client.read_holding_registers(address=request_addr,count=1,slave=0)
-    # data = read.registers[0] #reading the registers with the request_addr addresse 
-    # client.close()
-    #terminate the connection
     try:
-        rr = client.read_holding_registers(address=request_addr,count=1,slave=0)
+        rr = client.read_holding_registers(address=request_addr,count=1)
         data = rr.registers[0]
     except ModbusException as exc:
         print(f"Received ModbusException({exc}) from library")
