@@ -1,5 +1,6 @@
 from paho.mqtt import client as mqtt
 import ssl
+import struct
 
 path_to_root_cert = "C:\\Users\\etien\\OneDrive\\Bureau\\LIS\\Azure_HIL_to_DT\\certificate.txt"
 device_id = "Wind_unit"
@@ -20,7 +21,7 @@ def on_publish(client, userdata, mid):
 
 #Creating an instance of MQTT Client
 def create_client(device_id):
-    client = mqtt.Client(client_id=device_id, protocol=mqtt.MQTTv311, transport="websockets")
+    client = mqtt.Client(client_id=device_id, protocol=mqtt.MQTTv311, transport="tcp")
     return(client)
 
 def connect_iot_hub(device_id, client,path_to_root_cert,sas_token,iot_hub_name):
@@ -39,7 +40,8 @@ def connect_iot_hub(device_id, client,path_to_root_cert,sas_token,iot_hub_name):
     client.loop_forever()
 
 def sending_message(client,data):
-    client.publish("devices/"+ device_id + "/messages/events/", data, qos=1)
+    data_pack = struct.pack("i",data)
+    client.publish("devices/"+ device_id + "/messages/events/", data_pack, qos=1)
     print("Message sent to"+iot_hub_name)
     
 def run_client(device_id,path_to_root_cert,sas_token,iot_hub_name,data):
