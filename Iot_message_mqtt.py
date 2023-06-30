@@ -20,7 +20,7 @@ def on_publish(client, userdata, mid):
 
 #Creating an instance of MQTT Client
 def create_client(device_id):
-    client = mqtt.Client(client_id=device_id, protocol=mqtt.MQTTv311)
+    client = mqtt.Client(client_id=device_id, protocol=mqtt.MQTTv311, transport="websockets")
     return(client)
 
 def connect_iot_hub(device_id, client,path_to_root_cert,sas_token,iot_hub_name):
