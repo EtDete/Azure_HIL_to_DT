@@ -20,7 +20,7 @@ def on_log(client, userdata, level, buf):
 
 device_id = "Wind_unit" # Add device id
 iot_hub_name = "MicrogridHub" # Add iot hub name
-sas_token = "jw92w3o43TpsXpNGEmb1bXAsRrWvtGSedWGE5zWHYGQ=" # Add sas token string
+sas_token = "HostName=MicrogridHub.azure-devices.net;DeviceId=Wind_unit;SharedAccessSignature=SharedAccessSignature sr=MicrogridHub.azure-devices.net%2Fdevices%2FWind_unit&sig=AXdispSkJd5hk%2BggiT9RVeuy3CRfuuxgW6mYKntTr0U%3D&se=1698063862" # Add sas token string
 client = mqtt.Client(client_id=device_id, protocol=mqtt.MQTTv311,  clean_session=False)
 client.on_log = on_log
 client.tls_set_context(context=None)

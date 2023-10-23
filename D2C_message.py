@@ -45,7 +45,7 @@ async def main():
                 await client.send_message(message)
             except Exception as ex:
                 print("Error sending message from device: {}".format(ex))
-            await asyncio.sleep(1)
+            await asyncio.sleep(1000)
 
     except Exception as iothub_error:
         print("Unexpected error %s from IoTHub" % iothub_error)
