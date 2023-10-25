@@ -3,7 +3,7 @@ import socket
 # import parameter as p
 # alias = input('Choose an alias >>> ')
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(('147.94.73.189', 55000))
+client.connect(('147.94.73.201', 55000))
 
 
 def client_receive():
