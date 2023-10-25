@@ -2,15 +2,17 @@ import threading
 import socket
 
 
+
+
 class Client:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect(('192.168.1.121', 55000))
+        self.client.connect((str(input("Quelle l'IP du serveur ? >>> ")), 55000))
 
-        self.receive_thread = threading.Thread(target=self.client_receive, daemon=True)
+        self.receive_thread = threading.Thread(target=self.client_receive)
         self.receive_thread.start()
 
-        self.send_thread = threading.Thread(target=self.client_send, daemon=True)
+        self.send_thread = threading.Thread(target=self.client_send)
         self.send_thread.start()
 
     def __enter__(self):
@@ -31,6 +33,6 @@ class Client:
 
     def client_send(self):
         while True:
-            message = input("Quel est votre message ?")
+            message = input(">>>  ")
             self.client.send(message.encode('utf-8'))
 

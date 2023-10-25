@@ -1,10 +1,5 @@
-import socket
-import asyncio
-import time
-import parameter as p
-import client
-import server
+import Client_propre
 
-# if __name__=='__main__':
-#     server.receive()
+if __name__=='__main__':
+    client = Client_propre.Client()
     

@@ -1,2 +1,0 @@
-class TCP_client():
-    
