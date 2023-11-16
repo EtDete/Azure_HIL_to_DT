@@ -29,7 +29,8 @@
 # client.subscribe(topic = topic, qos = 0)
 # print(f"Receving data from topic {topic}")
 # client.loop_forever()
-import mqttClass
+import mqttClass 
 
-client = mqttClient("test_client1")
-client.run()
+client = mqttClass.mqttClient(client_id="test_client1")
+client.run(topic='topic/important')
+client.send_message(topic='topic/important',message="SALUT!")
