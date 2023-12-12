@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 from paho.mqtt.properties import Properties
 from paho.mqtt.packettypes import PacketTypes 
-import keyboard
+
 
 
 def on_subscribe(client, userdata, mid, granted_qos):
