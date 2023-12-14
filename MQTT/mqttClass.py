@@ -2,6 +2,7 @@ import paho.mqtt.client as mqtt
 import time
 import appJar
 import asyncio
+import keyboard
 
 global topic 
 topic = "topic/important"
@@ -32,11 +33,11 @@ class mqttClient(): #Classe des instances clients mqtt
             
     @staticmethod
     def on_message(client, userdata, message):
-        print("Received message '" + str(message.payload) + "' on topic '" + message.topic + "' with QoS " + str(message.qos))
-        if message.topic != topic:
-            return 1
-        else :
-            return 0
+        print("Received message " + str(message.payload) + " on topic " + message.topic + " with QoS " + str(message.qos))
+        # if message.topic != topic:
+        #     return 1
+        # else :
+        #     return 0
         
     @staticmethod
     def on_log(client, userdata, level, buf):
@@ -52,9 +53,9 @@ class mqttClient(): #Classe des instances clients mqtt
     async def run(self,topic :str):
         
         self.client.on_connect = self.on_connect
-        self.client.on_subscribe = self.on_subscribe
+        #self.client.on_subscribe = self.on_subscribe
         self.client.on_message = self.on_message
-        self.client.on_log = self.on_log
+        #self.client.on_log = self.on_log
         self.client.on_disconnect = self.on_disconnect
         
         self.client.will_set(topic=topic,payload="The client was unexpectedly disconnected !",qos=0,retain=False)
@@ -64,10 +65,10 @@ class mqttClient(): #Classe des instances clients mqtt
         #disc = self.client.disconnect() #renvoie 0 si la déconnexion c'est bien passée
         # if disc != 0:
         #     print("Unexpected error on disconnecting this client !")
-        self.client.subscribe(topic = topic, qos = 0)
+        # self.client.subscribe(topic = topic, qos = 0)
         await self.loop_start()
         
-    async def send_message(self,message,topic):
+    def send_message(self,message,topic):
         self.client.publish(topic,payload = message, qos=0)
 
     async def receive_message(self,topic):
@@ -75,13 +76,24 @@ class mqttClient(): #Classe des instances clients mqtt
 
     async def loop_start(self):
         #Définir ce qu'il y a faire pendant le temps de connexion
-        timeout = 60.0
+        def callback():
+            message = input(f"Type the message to send to the topic {topic}")
+            self.send_message(message=message,topic=topic)
         self.client.loop_start()
+        await self.receive_message(topic=topic)
+        print("Type t in cmd to send a message")
+        timeout = 60
         while timeout > 0:
+            #print("Is the client connected ? : ", self.client.is_connected())
             await self.receive_message(topic=topic)
+            keyboard.add_hotkey("space",callback=callback)
+                # message = input(f"Type the message to send to the topic {topic}")
+                # await self.send_message(message=message,topic=topic)
             timeout-=1
+            #print(timeout)
             await asyncio.sleep(1)
         self.client.loop_stop()
         self.client.disconnect()
+
 
         
