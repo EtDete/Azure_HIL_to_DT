@@ -1,3 +1,4 @@
+from typing import List,NewType
 import paho.mqtt.client as mqtt
 import time
 import appJar
@@ -7,13 +8,16 @@ import keyboard
 global topic 
 topic = "topic/important"
 
+global list_client
+list_client = []
+
 class mqttClient(): #Classe des instances clients mqtt
     
     def __init__(self,client_id : str) -> None:
         #Le client_id doit être unique à chaque client; Mettre 0 et "" laisse le programme en générer un (si clean_session = True).
         self.client_id = client_id
         self.client = mqtt.Client(client_id=client_id, clean_session=True,userdata =None, protocol =mqtt.MQTTv311, transport="tcp")
-        self.loop = asyncio.Task[None]
+        list_client.append(self)
     
     def __exit__(self):
         #permet de gérer les exceptions et la déconnexion propre
