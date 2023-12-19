@@ -38,4 +38,6 @@ test_client2.on_subscribe=on_subscribe
 
 test_client2.connect("mqtt.eclipseprojects.io",port=1883,keepalive = 180, bind_address = "")
 test_client2.subscribe(topic="topic",qos=1)
-test_client2.loop_forever()
+test_client2.loop_start()
+test_client2.publish(topic="topic",payload="HELLO",qos=1)
+test_client2.loop_stop()
