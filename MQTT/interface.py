@@ -51,7 +51,7 @@ class mqtt_interface():
     def receive(self,btn):
         if btn == "Receive":
             #TODO Regler le problème de réception des messages
-            text = text + " Received : " + str(mqttClass.data)
+            #text = text + " Received : " + str(mqttClass.data)
             self.__app.setMessage(title="Message_sent",text=text)    
        
     def tchat(self,btn):

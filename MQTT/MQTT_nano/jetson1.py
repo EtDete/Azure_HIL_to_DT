@@ -51,3 +51,6 @@ def optimisation():
     #   do iteration of algorithm
     #   send(('Jetson1',x_1,t_1))
     pass
+
+if __name__=="__main__":
+    launch()

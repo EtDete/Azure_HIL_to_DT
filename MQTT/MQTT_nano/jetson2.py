@@ -51,3 +51,5 @@ def optimisation():
     #   send(('Jetson2',x_2,t_2))
     pass
 
+if __name__=="__main__":
+    launch()
