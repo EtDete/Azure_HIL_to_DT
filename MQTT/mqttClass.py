@@ -1,4 +1,3 @@
-from typing import List,NewType
 import paho.mqtt.client as mqtt
 import time
 import appJar

@@ -30,15 +30,18 @@ class mqttClient(): #Classe des instances clients mqtt
     @staticmethod
     def on_message(client, userdata, message):
         #print("Message received")
-        global data
-        global data_j1,data_j2,data_j3
-        data = eval(message.payload) 
-        if data[0] == 'Jetson1':
-            data_j1 = data
-        elif data[0] == 'Jetson2':
-            data_j2 = data
-        else:
-            data_j3 = data
+        if message.topic == topic:
+            global data
+            global data_j1,data_j2,data_j3
+            data = eval(message.payload) 
+            if data[0] == 'Jetson1':
+                data_j1 = data
+            elif data[0] == 'Jetson2':
+                data_j2 = data
+            else:
+                data_j3 = data
+        else :
+            print("A message was received on the wrong topic : ",message.topic)
             
     @staticmethod
     def on_log(client, userdata, level, buf):
