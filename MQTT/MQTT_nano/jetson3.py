@@ -4,7 +4,7 @@ import time
 
 def launch():
     client = mqttClass_nano.mqttClient(client_id="jetson3")
-    client.run(topic='topic/optimisation/variable')
+    client.run()
     client.client.loop_start()
 
     Timeout = 0

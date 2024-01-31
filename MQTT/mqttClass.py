@@ -1,8 +1,4 @@
 import paho.mqtt.client as mqtt
-import time
-import appJar
-import asyncio
-import keyboard
 
 global topic 
 topic = "topic/important"

@@ -54,7 +54,7 @@ class mqttClient(): #Classe des instances clients mqtt
         else:
             print("The client was sucessfully disconnected")
 
-    def run(self,topic :str):
+    def run(self):
         
         self.client.on_connect = self.on_connect
         # self.client.on_subscribe = self.on_subscribe
@@ -64,7 +64,6 @@ class mqttClient(): #Classe des instances clients mqtt
         
         self.client.will_set(topic=topic,payload="The client was unexpectedly disconnected !",qos=0,retain=False)
         self.client.connect("mqtt.eclipseprojects.io",port=1883,keepalive = 180, bind_address = "") #bind_address permet de bind le client à une interface si plusieurs interfaces existent
-
         
     def send_message(self,message,topic):
         self.client.publish(topic,payload = message, qos=1)
